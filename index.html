@@ -1,0 +1,2341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ECE-249 — Test Series (Units 1-6)</title>
+<style>
+/* ===================== CSS Variables ===================== */
+:root{
+    --bg:#3cd6b2; /* Background main color variable */
+    --card:#000000; /* Card background color variable */
+    --accent:#11b57e; /* Main accent color */
+    --accent-600:#059669; /* Darker accent */
+    --accent-400:#0c4102; /* Lighter accent */
+    --danger:#c42606b8; /* Error/danger color */
+    --muted:#233e4f; /* Muted text color */
+    --glass:rgb(63, 118, 185); /* Glassy overlay color */
+}
+
+/* ===================== Global Styles ===================== */
+*{
+    box-sizing:border-box; /* Padding + border included in element width/height */
+    font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial; /* Default font stack */
+}
+html,body{
+    height:100%; /* Full height for page */
+}
+body{
+    margin:0; /* Remove default margin */
+    background:
+        radial-gradient(900px 500px at 10% 10%, rgba(210, 47, 142, 0.04), transparent), /* Decorative radial gradient */
+        linear-gradient(180deg,#3171e0 0%, #29cacf 100%); /* Main page gradient background */
+    color:#070b0f; /* Default text color */
+    min-height:100vh; /* Minimum height full viewport */
+    display:flex; /* Flex layout */
+    align-items:center; /* Vertically center content */
+    justify-content:center; /* Horizontally center content */
+    padding:18px; /* Page padding */
+}
+
+/* ===================== Layout Wrappers ===================== */
+.wrap{
+    width:100%; /* Full width */
+    max-width:1100px; /* Max width for large screens */
+    margin:0 auto; /* Center horizontally */
+}
+.card{
+    background:linear-gradient(180deg, rgba(5, 3, 3, 0.02), rgba(0,0,0,0.12)); /* Card gradient */
+    border-radius:14px; /* Rounded corners */
+    padding:18px; /* Inner spacing */
+    box-shadow:0 10px 40px rgba(2,6,23,0.7); /* Shadow under card */
+    border:1px solid rgba(255,255,255,0.03); /* Subtle border */
+}
+
+/* ===================== Header ===================== */
+header{
+    display:flex; /* Flex layout */
+    justify-content:space-between; /* Space between title and other elements */
+    align-items:flex-start; /* Align at top */
+    gap:12px; /* Gap between items */
+}
+.title{
+    display:flex; /* Flex for vertical layout */
+    flex-direction:column; /* Stack title + subtitle vertically */
+}
+h1{
+    margin:0; /* Remove default margin */
+    font-size:20px; /* Title font size */
+}
+.small-by{
+    font-size:12px; /* Small subtitle text */
+    color:var(--muted); /* Muted color */
+    margin-top:6px; /* Space above */
+}
+.accent-badge{
+    background:linear-gradient(90deg,var(--accent-400),var(--accent)); /* Gradient badge */
+    padding:6px 10px; /* Inner spacing */
+    border-radius:8px; /* Rounded corners */
+    color:#022; /* Text color inside badge */
+    font-weight:700; /* Bold */
+}
+
+/* ===================== Start area ===================== */
+.start-area{
+    display:flex; /* Flex layout */
+    gap:14px; /* Gap between inputs/buttons */
+    align-items:flex-start; /* Align at top */
+    margin-top:12px; /* Top spacing */
+}
+.inputs{
+    display:flex; /* Flex layout */
+    flex-direction:column; /* Stack inputs vertically */
+    gap:8px; /* Space between inputs */
+}
+input[type="text"], input[type="file"]{
+    padding:10px; /* Inner spacing */
+    border-radius:8px; /* Rounded corners */
+    border:1px solid rgba(255,255,255,0.05); /* Border style */
+    background:transparent; /* Transparent input background */
+    color:inherit; /* Same as body color */
+    width:280px; /* Fixed input width */
+}
+
+/* ===================== About box ===================== */
+.about{
+    background:linear-gradient(180deg, rgba(184, 11, 11, 0.01), rgba(156, 43, 43, 0.02)); /* Light background gradient */
+    padding:12px; /* Inner spacing */
+    border-radius:10px; /* Rounded corners */
+    border:1px solid rgba(105, 0, 0, 0.02); /* Light border */
+    max-width:600px; /* Max width */
+}
+.about p{
+    margin:6px 0; /* Paragraph spacing */
+    color:var(--muted); /* Muted color */
+    font-size:13px; /* Small text */
+}
+
+/* ===================== Buttons ===================== */
+.btn{
+    padding:10px 14px; /* Inner spacing */
+    border-radius:10px; /* Rounded */
+    border:0; /* No border */
+    cursor:pointer; /* Pointer on hover */
+    font-weight:700; /* Bold */
+    background:var(--accent); /* Main accent color */
+    color:rgb(0, 0, 0); /* Text color */
+    box-shadow:0 6px 20px rgba(14, 239, 164, 0.08); /* Shadow */
+    transition:transform .14s ease, box-shadow .14s ease; /* Smooth interaction */
+}
+.btn:active{
+    transform:translateY(2px); /* Button press effect */
+}
+.btn.ghost{
+    background:transparent; /* Ghost button */
+    border:1px solid rgb(89, 33, 33); /* Light border */
+    color:rgb(142, 64, 0); /* Text color */
+}
+.btn.warn{
+    background:var(--danger); /* Red background for warning */
+    color:#52aeb7; /* Text color */
+}
+
+/* ===================== Row flex ===================== */
+.row{
+    display:flex; /* Flex layout */
+    gap:8px; /* Gap between items */
+    align-items:center; /* Vertical center */
+}
+.muted{
+    color:var(--muted); /* Muted text */
+    font-size:13px; /* Small text */
+}
+
+/* ===================== Main Layout ===================== */
+.main{
+    display:flex; /* Flex layout */
+    gap:16px; /* Gap between left and right */
+    margin-top:16px; /* Top spacing */
+}
+.left{
+    flex:1; /* Left area grows */
+}
+.right{
+    width:320px; /* Fixed width for right panel */
+}
+
+/* ===================== Top Status boxes ===================== */
+.topstatus{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    flex-wrap:wrap; /* Wrap to next line if overflow */
+}
+.status-box{
+    background:var(--glass); /* Glassy background */
+    padding:8px 10px; /* Inner padding */
+    border-radius:8px;
+    min-width:80px; /* Minimum width */
+    text-align:center; /* Center text */
+    font-size:13px;
+}
+.status-box .label{
+    color:var(--muted);
+    font-size:12px;
+}
+.status-box .val{
+    font-weight:800;
+    margin-top:4px;
+}
+
+/* ===================== Question Area ===================== */
+.question-area{
+    margin-top:12px;
+    padding:18px;
+    border-radius:12px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+    border:1px solid rgba(255,255,255,0.02);
+}
+.qtop{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.qtext{
+    font-size:19px;
+    font-weight:700;
+    margin:12px 0;
+}
+.options{
+    display:grid; /* Grid layout */
+    grid-template-columns:1fr 1fr; /* Two columns for options */
+    gap:5px; /* Gap between options */
+}
+.option{
+    padding:12px;
+    border-radius:10px;
+    border:3px solid rgba(1, 40, 28, 0.438);
+    cursor:pointer;
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    transition:transform .20s cubic-bezier(.2,.9,.3,1), box-shadow .18s ease, background .18s ease;
+}
+.option:hover{
+    transform:translateY(-4px); /* Hover lift effect */
+    box-shadow:0 15px 35px rgba(162, 66, 6, 0.6);
+}
+.option .label{
+    font-weight:750;
+}
+.option .explainTiny{
+    font-size:12px;
+    color:var(--muted);
+    padding:10px 10px;
+    border-radius:10px;
+    border:5px solid rgba(255,255,255,0.02);
+}
+
+/* ===================== Option states ===================== */
+.option.correct{
+    background:linear-gradient(90deg, rgba(11, 29, 23, 0.12), rgba(22, 69, 53, 0.06));
+    border-color:rgba(16,185,129,0.28);
+    color:var(--accent);
+    box-shadow:0 10px 30px rgba(16,185,129,0.06), 0 0 18px rgba(16,185,129,0.06) inset;
+    animation:glow 900ms ease forwards; /* Green glow animation */
+}
+.option.wrong{
+    background:linear-gradient(90deg, rgba(239,68,68,0.06), rgba(239,68,68,0.03));
+    border-color:rgba(5, 5, 5, 0.22);
+    color:var(--danger);
+    animation:shake .45s linear; /* Red shake animation */
+}
+
+/* ===================== Animations ===================== */
+@keyframes glow{
+    0%{box-shadow:0 0 0 rgba(16,185,129,0)}
+    50%{box-shadow:0 0 20px rgba(113, 234, 194, 0.08)}
+    100%{box-shadow:0 0 6px rgba(16,185,129,0.04)}
+}
+@keyframes shake{
+    0%{transform:translateX(0)}
+    25%{transform:translateX(-6px)}
+    50%{transform:translateX(6px)}
+    75%{transform:translateX(-4px)}
+    100%{transform:translateX(0)}
+}
+
+/* ===================== Explanation box ===================== */
+.explain{
+    font-size:14px;
+    color:var(--muted);
+    margin-top:10px;
+    padding:12px;
+    border-radius:10px;
+    background:rgba(0,0,0,0.05);
+    display:none; /* Hidden by default */
+}
+
+/* ===================== Controls and Footer ===================== */
+.controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:14px;
+}
+.nav{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+.footer{
+    margin-top:12px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* ===================== Modal ===================== */
+.modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(2,6,23,0.6); /* Semi-transparent backdrop */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:60;
+}
+.modal{
+    background:#d3d8e3;
+    padding:16px;
+    border-radius:12px;
+    width:90%;
+    max-width:720px;
+    border:1px solid rgba(255,255,255,0.03);
+}
+.modal h3{
+    margin:0 0 8px;
+}
+.results-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:8px;
+}
+.results-table th,.results-table td{
+    padding:8px;
+    border-bottom:1px solid rgba(255,255,255,0.03);
+    text-align:left;
+    font-size:13px;
+}
+.img-preview{
+    width:56px;
+    height:56px;
+    border-radius:8px;
+    object-fit:cover;
+    border:1px solid rgba(255,255,255,0.04);
+}
+
+/* ===================== Responsive ===================== */
+@media(max-width:880px){
+    .main{flex-direction:column;} /* Stack left & right vertically */
+    .right{width:100%;} /* Right panel full width */
+    .options{grid-template-columns:1fr;} /* Single column for options */
+}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" id="cardRoot">
+      <header>
+        <div class="title">
+          <div style="display:flex;align-items:center;gap:10px">
+            <h1>ECE-249 — Test Series (Units 1-6)</h1>
+            <div class="accent-badge" id="badgeCount">300+ Qs</div>
+          </div>
+          <div class="small-by">Created by <strong>Aryan Singh</strong></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+          <div style="font-size:12px;color:var(--muted)">BY:- <strong style="color:var(--accent)">ARYAN SINGH 🥷</strong></div>
+        </div>
+      </header>
+
+      <!-- START PAGE -->
+      <div id="startPage" style="margin-top:12px">
+        <div class="start-area">
+          <div class="inputs">
+            <input id="inpName" type="text" placeholder="Enter full name "  />
+            <input id="inpReg" type="text" placeholder="Registration number" />
+            <div style="display:flex;align-items:center;gap:8px">
+              <input id="inpPic" type="file" accept="image/*" />
+              <img id="imgPreview" class="img-preview" src="" alt="profile picture" style="display:none" />
+            </div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button id="btnStart" class="btn" disabled>Start Test</button>
+              <button id="btnResetStart" class="btn ghost">Reset</button>
+            </div>
+            <div id="startErrors" style="color:#ffcccb;font-size:13px;margin-top:6px"></div>
+          </div>
+          <div class="about">
+            <strong>About this Test</strong>
+            <p>• 200+ MCQs covering Units 1-6. One question at a time.</p>
+            <p>• Name & Registration number are mandatory. Profile picture optional.</p>
+            <p>• No hard time limit, but inactivity of 60s shows a warning.</p>
+            <p>• Wrong answers do not increase progress percentage (progress = correct / total).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEST PAGE (hidden initially) -->
+      <div id="testPage" style="display:none">
+        <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap" class="topstatus">
+            <div class="status-box"><div class="label">Time</div><div class="val" id="timeTop">00:00</div></div>
+            <div class="status-box"><div class="label">Correct</div><div class="val" id="topCorrect">0</div></div>
+            <div class="status-box"><div class="label">Wrong</div><div class="val" id="topWrong">0</div></div>
+            <div class="status-box"><div class="label">Progress</div><div class="val" id="topProgress">0%</div></div>
+            <div class="status-box"><div class="label">Attempted</div><div class="val" id="topAttempted">0</div></div>
+            <div class="status-box"><div class="label">Q</div><div class="val" id="topQno">0/300</div></div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="muted" id="showUser">—</div>
+            <button id="btnEndTestTop" class="btn warn">End Test</button>
+          </div>
+        </div>
+
+        <div class="main">
+          <div class="left">
+            <div class="question-area">
+              <div class="qtop">
+                <div class="muted">Name: <span id="showName">—</span> • Reg: <span id="showReg">—</span></div>
+                <div class="muted">Progress: <span id="progressPercent">0%</span></div>
+              </div>
+              <div class="qtext" id="questionText">Loading...</div>
+              <div class="options" id="optionsBox"></div>
+              <div class="explain" id="explainBox"></div>
+
+              <div class="controls">
+                <div class="nav">
+                  <button id="btnPrev" class="btn ghost">Prev</button>
+                  <button id="btnNext" class="btn ghost">Next</button>
+                  <button id="btnShowExplain" class="btn ghost">Show Explanation</button>
+                </div>
+                <div class="muted">Score: <span id="scoreInline">0</span></div>
+              </div>
+            </div>
+            <div class="footer">Tip: Click the correct option — it turns <span style="color:var(--accent);font-weight:700">green</span>. Wrong picks become <span style="color:var(--danger);font-weight:700">red</span>.</div>
+          </div>
+
+          <aside class="right">
+            <div class="scorebox">
+              <div class="row" style="justify-content:space-between;align-items:center">
+                <div style="display:flex;gap:8px;align-items:center">
+                  <div style="display:flex;flex-direction:column"><div class="muted" style="font-size:12px">Questions</div><div style="font-weight:800" id="curQ">0</div></div>
+                  <div style="display:flex;flex-direction:column"><div class="muted" style="font-size:12px">Total</div><div style="font-weight:800" id="totalQ">300</div></div>
+                </div>
+                <img id="userPicSmall" class="img-preview" src="" style="display:none">
+              </div>
+
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <div style="flex:1"><div class="label muted">Correct</div><div id="correctCount" style="font-weight:800">0</div></div>
+                <div style="flex:1"><div class="label muted">Wrong</div><div id="wrongCount" style="font-weight:800">0</div></div>
+              </div>
+
+              <div style="display:flex;gap:8px;margin-top:10px">
+                <div style="flex:1"><div class="label muted">Attempted</div><div id="attemptedCount" style="font-weight:800">0</div></div>
+                <div style="flex:1"><div class="label muted">Time</div><div id="timeSpent" style="font-weight:800">00:00</div></div>
+              </div>
+               <div style="border: 2px solid #555; background-color: transparent; padding: 10px; width: fit-content; border-radius: 5px; font-family: sans-serif; font-size: 14px; color: inherit; margin: 15px 0;">
+                    <strong>How to View Answers:</strong>
+                    <ol style="margin: 5px 0 0 20px; padding: 0;">
+                        <li>Click <b>"End Test"</b></li>
+                        <li>Click <b>"OK"</b></li>
+                       <li>Click <b>"OK"</b> again</li>
+                        <li>Click <b>"Review Answers"</b></li>
+                    </ol>
+                </div>
+
+              <div style="margin-top:10px;display:flex;gap:8px">
+                <!-- <button id="btnSave" class="btn">Save Result</button> -->
+                <button id="btnExport" class="btn ghost">Export CSV</button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+  const SUPABASE_URL = "https://kqfdyvqrhytbjyszsxmr.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtxZmR5dnFyaHl0Ymp5c3pzeG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ2NDkzNzQsImV4cCI6MjA4MDIyNTM3NH0.-WpfPxH7Q3xE5UF5448ERdsdSjYTiefF4nVymSM9cu0";
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  window.supabase = supabase;
+</script>
+<script>const QUESTIONS = [
+  {
+    "q": "This road is ___ than the other one.",
+    "options": ["good", "better", "best", "well"],
+    "answer": 1,
+    "explanation": "We use the comparative form 'better' to compare two things.",
+    "hint": "yeh road doosri road se zyada acchi hai"
+  },
+  {
+    "q": "She ___ to the office by bus every day.",
+    "options": ["go", "goes", "going", "gone"],
+    "answer": 1,
+    "explanation": "With third person singular, we use 'goes'.",
+    "hint": "woh roz bus se office jaati hai"
+  },
+  {
+    "q": "Choose the correct preposition: My phone is ___ my bag.",
+    "options": ["on", "in", "at", "of"],
+    "answer": 1,
+    "hint": "mera phone mere bag mein hai"
+  },
+  {
+    "q": "Choose the correct preposition: He is standing ___ the door.",
+    "options": ["on", "in", "at", "of"],
+    "answer": 2,
+    "hint": "woh darwaze par khada hai"
+  },
+  {
+    "q": "Choose the correct word: ___ of these two roads is shorter.",
+    "options": ["Either", "Neither", "They", "If"],
+    "answer": 0,
+    "hint": "in dono sadkon mein se ek chhoti hai"
+  },
+  {
+    "q": "Choose the correct word: ___ of the answers are correct.",
+    "options": ["Either", "Neither", "If", "They"],
+    "answer": 1,
+    "hint": "koi bhi jawab sahi nahi hai"
+  },
+  {
+    "q": "Choose the correct conjunction: I will help you ___ you ask me.",
+    "options": ["either", "neither", "if", "of"],
+    "answer": 2,
+    "hint": "agar tum mujhse puchoge to main madad karunga"
+  },
+  {
+    "q": "Choose the correct pronoun: ___ are playing cricket.",
+    "options": ["Either", "Neither", "They", "If"],
+    "answer": 2,
+    "hint": "woh cricket khel rahe hain"
+  },
+  {
+    "q": "Choose the correct preposition: She was born ___ 2008.",
+    "options": ["on", "at", "in", "of"],
+    "answer": 2,
+    "hint": "uska janm 2008 mein hua tha"
+  },
+  {
+    "q": "Choose the correct preposition: The meeting is ___ Monday.",
+    "options": ["in", "on", "at", "of"],
+    "answer": 1,
+    "hint": "meeting Monday ko hai"
+  },
+  {
+    "q": "Identify the tense: He is watching TV.",
+    "options": ["Present Simple", "Present Continuous", "Past Simple", "Future Simple"],
+    "answer": 1,
+    "hint": "woh TV dekh raha hai"
+  },
+  {
+    "q": "Identify the tense: They went to school yesterday.",
+    "options": ["Present Simple", "Past Simple", "Present Perfect", "Future"],
+    "answer": 1,
+    "hint": "woh kal school gaye the"
+  },
+  {
+    "q": "Choose the correct verb: She ___ coffee every morning.",
+    "options": ["drink", "drinks", "drank", "drinking"],
+    "answer": 1,
+    "hint": "woh har subah coffee peeti hai"
+  },
+  {
+    "q": "Choose the correct verb: They ___ finished the work.",
+    "options": ["has", "have", "had", "having"],
+    "answer": 1,
+    "hint": "unhone kaam poora kar liya hai"
+  },
+  {
+    "q": "Choose the correct preposition: The cat is hiding ___ the bed.",
+    "options": ["on", "at", "under", "of"],
+    "answer": 2,
+    "hint": "billi bed ke neeche chhupi hai"
+  },
+  {
+    "q": "Choose the correct word: ___ you don’t hurry, you will be late.",
+    "options": ["Either", "Neither", "If", "They"],
+    "answer": 2,
+    "hint": "agar tum jaldi nahi karoge to late ho jaoge"
+  },
+  {
+    "q": "Choose the correct word: ___ of my friends likes coffee.",
+    "options": ["Either", "Neither", "They", "If"],
+    "answer": 0,
+    "hint": "mere doston mein se ek coffee pasand karta hai"
+  },
+  {
+    "q": "Choose the correct preposition: He is angry ___ me.",
+    "options": ["on", "of", "at", "in"],
+    "answer": 2,
+    "hint": "woh mujhse gussa hai"
+  },
+  {
+    "q": "Identify the tense: I have completed my homework.",
+    "options": ["Past Simple", "Present Perfect", "Present Continuous", "Future"],
+    "answer": 1,
+    "hint": "maine apna homework poora kar liya hai"
+  },
+  {
+    "q": "Choose the correct verb: We ___ going to the market.",
+    "options": ["is", "are", "was", "were"],
+    "answer": 1,
+    "hint": "hum market ja rahe hain"
+  },
+  {
+    "q": "Choose the correct preposition: He sat ___ the corner of the room.",
+    "options": ["in", "on", "at", "of"],
+    "answer": 2,
+    "hint": "woh room ke kone par baitha"
+  },
+  {
+    "q": "Choose the correct word: ___ Rina nor Tina was selected.",
+    "options": ["Either", "Neither", "They", "If"],
+    "answer": 1,
+    "hint": "na Rina aur na Tina select hui"
+  },
+  {
+    "q": "I didn’t call you ___ I was busy.",
+    "options": ["but", "so", "because", "although"],
+    "answer": 2,
+    "explanation": "'Because' is used to give a reason.",
+    "hint": "maine tumhe call nahi kiya kyunki main busy tha"
+  },
+  {
+    "q": "Choose the correct preposition: She is sitting ___ the chair.",
+    "options": ["on", "in", "at", "of"],
+    "answer": 0,
+    "hint": "woh kursi par baithi hai"
+  },
+  {
+    "q": "Choose the correct preposition: He lives ___ Delhi.",
+    "options": ["on", "at", "in", "of"],
+    "answer": 2,
+    "hint": "woh Delhi mein rehta hai"
+  },
+  {
+    "q": "Choose the correct preposition: I will meet you ___ 5 PM.",
+    "options": ["on", "in", "at", "of"],
+    "answer": 2,
+    "hint": "main tumse 5 baje milunga"
+  },
+  {
+    "q": "Choose the correct preposition: The book is made ___ paper.",
+    "options": ["of", "on", "at", "in"],
+    "answer": 0,
+    "hint": "yeh kitaab kagaz se bani hai"
+  },
+  {
+    "q": "Choose the correct word: ___ of the answers is correct.",
+    "options": ["Either", "Neither", "If", "They"],
+    "answer": 0,
+    "hint": "dono mein se ek jawab sahi hai"
+  },
+  {
+    "q": "Choose the correct word: ___ of the boys was present.",
+    "options": ["Either", "Neither", "They", "If"],
+    "answer": 1,
+    "hint": "dono ladkon mein se koi bhi maujood nahi tha"
+  },
+  {
+    "q": "Choose the correct conjunction: I will go ___ it stops raining.",
+    "options": ["either", "neither", "if", "of"],
+    "answer": 2,
+    "hint": "agar baarish ruk gayi to main jaunga"
+  },
+  {
+    "q": "Choose the correct pronoun: ___ are waiting outside.",
+    "options": ["Either", "Neither", "They", "If"],
+    "answer": 2,
+    "hint": "woh bahar intezar kar rahe hain"
+  },
+  {
+    "q": "Choose the correct preposition: He is good ___ math.",
+    "options": ["on", "of", "at", "in"],
+    "answer": 2,
+    "hint": "woh maths mein achha hai"
+  },
+  {
+    "q": "Choose the correct preposition: The keys are ___ the table.",
+    "options": ["in", "on", "at", "of"],
+    "answer": 1,
+    "hint": "chabiyan table par hain"
+  },
+  {
+    "q": "Choose the correct word: ___ you hurry, you will miss the bus.",
+    "options": ["Either", "Neither", "If", "They"],
+    "answer": 2,
+    "hint": "agar tum jaldi nahi karoge to bus chhoot jayegi"
+  },
+  {
+    "q": "Choose the correct word: ___ Ramesh or Suresh can solve this problem.",
+    "options": ["Neither", "If", "They", "Either"],
+    "answer": 3,
+    "hint": "Ramesh ya Suresh mein se koi ek is problem ko solve kar sakta hai"
+  },
+  {
+    "q": "Choose the correct word: ___ of my parents is at home.",
+    "options": ["Either", "Neither", "They", "If"],
+    "answer": 1,
+    "hint": "mere dono parents mein se koi bhi ghar par nahi hai"
+  },
+  {
+    "q": "Choose the correct preposition: She arrived ___ the airport early.",
+    "options": ["on", "of", "at", "in"],
+    "answer": 2,
+    "hint": "woh airport par jaldi pahunch gayi"
+  },
+  {
+    "q": "Choose the correct preposition: He is afraid ___ dogs.",
+    "options": ["of", "on", "at", "in"],
+    "answer": 0,
+    "hint": "use kutton se darr lagta hai"
+  },
+  {
+    "q": "Choose the correct pronoun: ___ have completed the work.",
+    "options": ["Either", "Neither", "They", "If"],
+    "answer": 2,
+    "hint": "unhone kaam poora kar liya hai"
+  },
+  {
+    "q": "Choose the correct preposition: The train stopped ___ the station.",
+    "options": ["in", "on", "at", "of"],
+    "answer": 2,
+    "hint": "train station par ruki"
+  },
+  {
+    "q": "Choose the correct word: ___ Ram nor Shyam was late.",
+    "options": ["Either", "Neither", "They", "If"],
+    "answer": 1,
+    "hint": "na Ram aur na Shyam late tha"
+  },
+  {
+    "q": "Choose the correct preposition: She works ___ a hospital.",
+    "options": ["on", "at", "of", "either"],
+    "answer": 1,
+    "hint": "woh hospital mein kaam karti hai"
+  },
+  {
+    "q": "Choose the correct word: ___ you study well, you will pass.",
+    "options": ["Neither", "Either", "If", "They"],
+    "answer": 2,
+    "hint": "agar tum achhe se padhoge to pass ho jaoge"
+  },
+  {
+    "q": "Please turn ___ the fan before sleeping.",
+    "options": ["on", "up", "off", "down"],
+    "answer": 2,
+    "explanation": "'Turn off' means to stop a device.",
+    "hint": "sone se pehle fan band kar do"
+  },
+  {
+    "q": "He has been working here ___ five years.",
+    "options": ["since", "from", "for", "by"],
+    "answer": 2,
+    "explanation": "'For' is used with a period of time.",
+    "hint": "woh yahan paanch saalon se kaam kar raha hai"
+  },
+  {
+    "q": "I am not used to ___ up early.",
+    "options": ["wake", "woke", "waking", "wakes"],
+    "answer": 2,
+    "explanation": "'Used to' is followed by verb + ing.",
+    "hint": "mujhe jaldi uthne ki aadat nahi hai"
+  },
+  {
+    "q": "I usually ___ up early on weekdays.",
+    "options": ["wake", "wakes", "waking", "woke"],
+    "answer": 0,
+    "explanation": "With subject 'I', base form of verb is used.",
+    "hint": "main aam taur par weekdays me jaldi uthta hoon"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "She going to market yesterday.",
+      "She goes to market yesterday.",
+      "She went to the market yesterday.",
+      "She go to the market yesterday."
+    ],
+    "answer": 2,
+    "hint": "woh kal market gayi thi"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "I am agree with you.",
+      "I agree with you.",
+      "I agreeing with you.",
+      "I agreed with you now."
+    ],
+    "answer": 1,
+    "hint": "main tumse sehmat hoon"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "He don’t like tea.",
+      "He doesn’t likes tea.",
+      "He doesn’t like tea.",
+      "He didn’t likes tea."
+    ],
+    "answer": 2,
+    "hint": "use chai pasand nahi hai"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "They is playing football.",
+      "They are playing football.",
+      "They was playing football.",
+      "They plays football."
+    ],
+    "answer": 1,
+    "hint": "woh football khel rahe hain"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "I have seen this movie before.",
+      "I has seen this movie before.",
+      "I saw this movie before.",
+      "I seeing this movie before."
+    ],
+    "answer": 0,
+    "hint": "main yeh movie pehle dekh chuka hoon"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "She is more smarter than me.",
+      "She is smarter than me.",
+      "She is smartest than me.",
+      "She is smart than me."
+    ],
+    "answer": 1,
+    "hint": "woh mujhse zyada smart hai"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "There is many people here.",
+      "There are many people here.",
+      "There were many people here now.",
+      "There be many people here."
+    ],
+    "answer": 1,
+    "hint": "yahan bahut log hain"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "He reached at home late.",
+      "He reached to home late.",
+      "He reached home late.",
+      "He reach home late."
+    ],
+    "answer": 2,
+    "hint": "woh ghar der se pahuncha"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "I am living here since 2020.",
+      "I live here since 2020.",
+      "I have been living here since 2020.",
+      "I lived here since 2020."
+    ],
+    "answer": 2,
+    "hint": "main 2020 se yahan reh raha hoon"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "She didn’t went to school.",
+      "She doesn’t went to school.",
+      "She didn’t go to school.",
+      "She not went to school."
+    ],
+    "answer": 2,
+    "hint": "woh school nahi gayi"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "This road is more better than that.",
+      "This road is best than that.",
+      "This road is better than that.",
+      "This road is good than that."
+    ],
+    "answer": 2,
+    "hint": "yeh road us road se zyada accha hai"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "If it will rain, we will stay home.",
+      "If it rains, we will stay home.",
+      "If it raining, we stay home.",
+      "If it rain, we stayed home."
+    ],
+    "answer": 1,
+    "hint": "agar baarish hui to hum ghar rahenge"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "He is afraid from dogs.",
+      "He is afraid of dogs.",
+      "He afraid of dogs.",
+      "He afraid from dogs."
+    ],
+    "answer": 1,
+    "hint": "use kutton se darr lagta hai"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "She has completed her work.",
+      "She have completed her work.",
+      "She had complete her work.",
+      "She completing her work."
+    ],
+    "answer": 0,
+    "hint": "usne apna kaam poora kar liya hai"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "Neither of the answers are correct.",
+      "Neither of the answers is correct.",
+      "Neither answer are correct.",
+      "Neither answers is correct."
+    ],
+    "answer": 1,
+    "hint": "koi bhi jawab sahi nahi hai"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "Either you or he are wrong.",
+      "Either you or he is wrong.",
+      "Either you and he is wrong.",
+      "Either you nor he is wrong."
+    ],
+    "answer": 1,
+    "hint": "ya to tum ya woh galat ho"
+  },
+  {
+    "q": "Identify the verb in the sentence: 'She writes a letter every day.'",
+    "options": ["She", "writes", "letter", "day"],
+    "answer": 1,
+    "hint": "woh roz ek letter likhti hai"
+  },
+  {
+    "q": "Identify the noun in the sentence: 'The boy is playing in the park.'",
+    "options": ["playing", "in", "boy", "is"],
+    "answer": 2,
+    "hint": "ladka park mein khel raha hai"
+  },
+  {
+    "q": "Identify the adjective in the sentence: 'This is a beautiful place.'",
+    "options": ["this", "place", "beautiful", "is"],
+    "answer": 2,
+    "hint": "yeh ek sundar jagah hai"
+  },
+  {
+    "q": "Find the tense: 'I am studying right now.'",
+    "options": ["Present Simple", "Present Continuous", "Past Simple", "Future Simple"],
+    "answer": 1,
+    "hint": "main abhi padh raha hoon"
+  },
+  {
+    "q": "Identify the verb in the sentence: 'They have completed the work.'",
+    "options": ["they", "work", "completed", "have completed"],
+    "answer": 3,
+    "hint": "unhone kaam poora kar liya hai"
+  },
+  {
+    "q": "Identify the noun in the sentence: 'Honesty is the best policy.'",
+    "options": ["best", "honesty", "is", "policy"],
+    "answer": 1,
+    "hint": "imaandari sabse acchi neeti hai"
+  },
+  {
+    "q": "Identify the adjective in the sentence: 'He bought a new phone.'",
+    "options": ["bought", "phone", "new", "he"],
+    "answer": 2,
+    "hint": "usne ek naya phone kharida"
+  },
+  {
+    "q": "Find the tense: 'She went to school yesterday.'",
+    "options": ["Present Simple", "Past Simple", "Present Perfect", "Future Simple"],
+    "answer": 1,
+    "hint": "woh kal school gayi thi"
+  },
+  {
+    "q": "Identify the verb in the sentence: 'We will start the project tomorrow.'",
+    "options": ["project", "tomorrow", "start", "will start"],
+    "answer": 3,
+    "hint": "hum kal project shuru karenge"
+  },
+  {
+    "q": "Identify the noun in the sentence: 'The teacher explained the lesson.'",
+    "options": ["explained", "lesson", "the", "teacher"],
+    "answer": 3,
+    "hint": "teacher ne lesson samjhaya"
+  },
+  {
+    "q": "Identify the adjective in the sentence: 'It was a difficult exam.'",
+    "options": ["exam", "was", "difficult", "it"],
+    "answer": 2,
+    "hint": "yeh ek mushkil exam tha"
+  },
+  {
+    "q": "Find the tense: 'They have been waiting for an hour.'",
+    "options": ["Present Perfect", "Present Perfect Continuous", "Past Continuous", "Future Continuous"],
+    "answer": 1,
+    "hint": "woh ek ghante se intezar kar rahe hain"
+  },
+  {
+    "q": "Identify the verb in the sentence: 'He runs very fast.'",
+    "options": ["fast", "very", "runs", "he"],
+    "answer": 2,
+    "hint": "woh bahut tez daudta hai"
+  },
+  {
+    "q": "Identify the noun in the sentence: 'My sister loves music.'",
+    "options": ["loves", "music", "my", "sister"],
+    "answer": 3,
+    "hint": "meri behen ko music pasand hai"
+  },
+  {
+    "q": "Identify the adjective in the sentence: 'She lives in a big house.'",
+    "options": ["lives", "house", "big", "she"],
+    "answer": 2,
+    "hint": "woh ek bade ghar mein rehti hai"
+  },
+  {
+    "q": "Find the tense: 'I will call you later.'",
+    "options": ["Present Simple", "Past Simple", "Future Simple", "Present Continuous"],
+    "answer": 2,
+    "hint": "main tumhe baad mein call karunga"
+  },
+  {
+    "q": "Identify the verb in the sentence: 'The baby is sleeping.'",
+    "options": ["baby", "sleeping", "the", "is"],
+    "answer": 1,
+    "hint": "baccha so raha hai"
+  },
+  {
+    "q": "Identify the noun in the sentence: 'Reading books improves knowledge.'",
+    "options": ["improves", "reading", "books", "knowledge"],
+    "answer": 3,
+    "hint": "kitabein padhna gyaan badhata hai"
+  },
+  {
+    "q": "Identify the adjective in the sentence: 'That was an interesting story.'",
+    "options": ["story", "interesting", "was", "that"],
+    "answer": 1,
+    "hint": "yeh ek dilchasp kahani thi"
+  },
+  {
+    "q": "Find the tense: 'She was cooking dinner.'",
+    "options": ["Past Simple", "Past Continuous", "Present Continuous", "Present Perfect"],
+    "answer": 1,
+    "hint": "woh khana bana rahi thi"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "She asked me where was I going.",
+      "She asked me where I was going.",
+      "She ask me where I was going.",
+      "She asked me where am I going."
+    ],
+    "answer": 1,
+    "hint": "usne mujhse poocha main kahan ja raha tha"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "I prefer tea than coffee.",
+      "I prefer tea over coffee.",
+      "I prefer tea from coffee.",
+      "I prefer tea to coffee."
+    ],
+    "answer": 3,
+    "hint": "mujhe coffee ke mukable chai zyada pasand hai"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "He has not any money.",
+      "He doesn’t have any money.",
+      "He don’t has any money.",
+      "He not have any money."
+    ],
+    "answer": 1,
+    "hint": "uske paas paise nahi hain"
+  },
+  {
+    "q": "Choose the correct sentence.",
+    "options": [
+      "She is good in maths.",
+      "She is good at maths.",
+      "She is good on maths.",
+      "She is good for maths."
+    ],
+    "answer": 1,
+    "hint": "woh maths mein acchi hai"
+  },
+  {
+    "q": "She ___ coffee every morning.",
+    "options": ["drink", "drinks", "drinking", "drank"],
+    "answer": 1,
+    "explanation": "Third person singular takes 's' with verb.",
+    "hint": "woh har subah coffee peeti hai"
+  },
+  {
+    "q": "We were tired, ___ we went home early.",
+    "options": ["but", "because", "so", "although"],
+    "answer": 2,
+    "explanation": "'So' is used to show result.",
+    "hint": "hum thak gaye the isliye hum jaldi ghar chale gaye"
+  },
+  {
+    "q": "Please keep the door ___.",
+    "options": ["open", "opened", "opening", "opens"],
+    "answer": 0,
+    "explanation": "Imperative sentences use base form.",
+    "hint": "kripya darwaza khula rakho"
+  },
+  {
+    "q": "He is ___ than his brother.",
+    "options": ["tall", "taller", "tallest", "more tall"],
+    "answer": 1,
+    "explanation": "Comparative form of 'tall' is 'taller'.",
+    "hint": "woh apne bhai se zyada lamba hai"
+  },
+  {
+    "q": "Identify the verb in the sentence: 'She reads a book every night.'",
+    "options": ["She", "reads", "book", "night"],
+    "answer": 1,
+    "explanation": "'Reads' is the action word (verb).",
+    "hint": "is sentence me kaam batane wala shabd 'reads' hai"
+  },
+  {
+    "q": "Identify the tense: 'He is playing cricket.'",
+    "options": ["Present Simple", "Present Continuous", "Past Simple", "Future Simple"],
+    "answer": 1,
+    "explanation": "'Is + verb-ing' shows Present Continuous tense.",
+    "hint": "woh abhi cricket khel raha hai"
+  },
+  {
+    "q": "I forgot to ___ her about the meeting.",
+    "options": ["tell", "told", "telling", "tells"],
+    "answer": 0,
+    "explanation": "Infinitive form follows 'to'.",
+    "hint": "main use meeting ke baare me batana bhool gaya"
+  },
+  {
+    "q": "They have lived here ___ 2020.",
+    "options": ["for", "since", "from", "by"],
+    "answer": 1,
+    "explanation": "'Since' is used with a point of time.",
+    "hint": "woh 2020 se yahan reh rahe hain"
+  },
+  {
+    "q": "This bag is too ___ to carry.",
+    "options": ["heavy", "heavier", "heavily", "heaviness"],
+    "answer": 0,
+    "explanation": "Adjective is needed after 'too'.",
+    "hint": "yeh bag uthane ke liye bahut bhaari hai"
+  },
+  {
+    "q": "She asked me ___ I was late.",
+    "options": ["what", "why", "that", "which"],
+    "answer": 1,
+    "explanation": "'Why' is used to ask reason.",
+    "hint": "usne mujhse poocha main late kyun tha"
+  },
+  {
+    "q": "We are looking ___ a new house.",
+    "options": ["at", "on", "for", "to"],
+    "answer": 2,
+    "explanation": "'Look for' means search.",
+    "hint": "hum ek naya ghar dhoondh rahe hain"
+  },
+
+  {
+    "q": "He didn’t come ___ he was sick.",
+    "options": ["but", "because", "although", "so"],
+    "answer": 1,
+    "explanation": "'Because' gives reason.",
+    "hint": "woh nahi aaya kyunki woh bimar tha"
+  },
+  {
+    "q": "I am interested ___ learning English.",
+    "options": ["on", "in", "at", "for"],
+    "answer": 1,
+    "explanation": "'Interested in' is the correct phrase.",
+    "hint": "mujhe English seekhne me interest hai"
+  },
+  {
+    "q": "The train arrived ___ time.",
+    "options": ["in", "on", "at", "by"],
+    "answer": 1,
+    "explanation": "'On time' means punctual.",
+    "hint": "train time par pahunchi"
+  },
+  {
+    "q": "She is good ___ mathematics.",
+    "options": ["in", "on", "at", "with"],
+    "answer": 2,
+    "explanation": "'Good at' is used for skills.",
+    "hint": "woh maths me acchi hai"
+  },
+  {
+    "q": "Don’t forget to ___ the lights.",
+    "options": ["turn off", "turn on", "turn up", "turn down"],
+    "answer": 0,
+    "explanation": "'Turn off' means switch off.",
+    "hint": "lights band karna mat bhoolna"
+  },
+  {
+    "q": "He has already ___ his work.",
+    "options": ["finish", "finished", "finishing", "finishes"],
+    "answer": 1,
+    "explanation": "Present perfect uses past participle.",
+    "hint": "usne apna kaam pehle hi khatam kar liya hai"
+  },
+  {
+    "q": "I was ___ tired to continue.",
+    "options": ["very", "too", "so", "enough"],
+    "answer": 1,
+    "explanation": "'Too' shows excess.",
+    "hint": "main aage badhne ke liye bahut zyada thak gaya tha"
+  },
+  {
+    "q": "She speaks ___ than me.",
+    "options": ["clear", "clearly", "more clearly", "most clearly"],
+    "answer": 2,
+    "explanation": "Comparative adverb is used here.",
+    "hint": "woh mujhse zyada clearly bolti hai"
+  },
+  {
+    "q": "We will start the meeting ___ he arrives.",
+    "options": ["until", "when", "while", "because"],
+    "answer": 1,
+    "explanation": "'When' is correct for time.",
+    "hint": "jaise hi woh aayega hum meeting shuru karenge"
+  },
+  {
+    "q": "I don’t have ___ money today.",
+    "options": ["many", "much", "few", "little"],
+    "answer": 1,
+    "explanation": "'Much' is used with uncountable nouns.",
+    "hint": "aaj mere paas zyada paise nahi hain"
+  },
+  {
+    "q": "She ___ finished her homework.",
+    "options": ["has", "have", "had", "having"],
+    "answer": 0,
+    "explanation": "With singular subject, 'has' is used.",
+    "hint": "usne apna homework khatam kar liya hai"
+  },
+  {
+    "q": "They were tired ___ working all day.",
+    "options": ["from", "by", "of", "with"],
+    "answer": 2,
+    "explanation": "'Tired of' shows reason.",
+    "hint": "woh poora din kaam karke thak gaye the"
+  },
+  {
+    "q": "He didn’t ___ the meeting yesterday.",
+    "options": ["attended", "attend", "attending", "attends"],
+    "answer": 1,
+    "explanation": "After did, base form is used.",
+    "hint": "usne kal meeting attend nahi ki"
+  },
+  {
+    "q": "This is the ___ movie I have ever seen.",
+    "options": ["good", "better", "best", "more good"],
+    "answer": 2,
+    "explanation": "Superlative form is 'best'.",
+    "hint": "yeh sabse acchi movie hai jo maine dekhi hai"
+  },
+  {
+    "q": "Please be quiet, the baby is ___.",
+    "options": ["sleep", "slept", "sleeping", "sleeps"],
+    "answer": 2,
+    "explanation": "Present continuous shows ongoing action.",
+    "hint": "kripya shant raho, bacha so raha hai"
+  },
+  {
+    "q": "I am looking forward to ___ you.",
+    "options": ["see", "saw", "seeing", "seen"],
+    "answer": 2,
+    "explanation": "'Look forward to' + verb-ing.",
+    "hint": "main tumse milne ka intezar kar raha hoon"
+  },
+  {
+    "q": "He runs ___ than anyone else.",
+    "options": ["fast", "faster", "fastest", "more fast"],
+    "answer": 1,
+    "explanation": "Comparative of fast is faster.",
+    "hint": "woh sabse tez daudta hai"
+  },
+  {
+    "q": "She has no idea ___ to do next.",
+    "options": ["what", "when", "where", "who"],
+    "answer": 0,
+    "explanation": "'What to do' is correct structure.",
+    "hint": "use pata nahi hai agla kya karna hai"
+  },
+  {
+    "q": "I couldn’t understand ___ he was saying.",
+    "options": ["that", "what", "which", "who"],
+    "answer": 1,
+    "explanation": "'What' acts as object here.",
+    "hint": "main samajh nahi paaya woh kya keh raha tha"
+  },
+  {
+    "q": "She speaks English very ___.",
+    "options": ["good", "better", "best", "well"],
+    "answer": 3,
+    "explanation": "Adverb 'well' modifies verb.",
+    "hint": "woh English bahut achhi bolti hai"
+  },
+  {
+    "q": "He apologized ___ being late.",
+    "options": ["for", "to", "of", "with"],
+    "answer": 0,
+    "explanation": "'Apologize for' is correct usage.",
+    "hint": "usne late hone ke liye maafi maangi"
+  },
+  {
+    "q": "We have to finish this work ___ today.",
+    "options": ["by", "till", "for", "since"],
+    "answer": 0,
+    "explanation": "'By' shows deadline.",
+    "hint": "hume yeh kaam aaj tak khatam karna hai"
+  },
+  {
+    "q": "She is responsible ___ the project.",
+    "options": ["to", "for", "with", "of"],
+    "answer": 1,
+    "explanation": "'Responsible for' is correct.",
+    "hint": "woh project ke liye zimmedar hai"
+  },
+  {
+    "q": "I wish I ___ more time.",
+    "options": ["have", "had", "will have", "has"],
+    "answer": 1,
+    "explanation": "'Wish' uses past tense for present unreal.",
+    "hint": "kaash mere paas zyada time hota"
+  },
+  {
+    "q": "He told me ___ wait here.",
+    "options": ["to", "for", "that", "with"],
+    "answer": 0,
+    "explanation": "'Told me to' is correct structure.",
+    "hint": "usne mujhe yahan intezar karne ko kaha"
+  },
+  {
+    "q": "The train arrived ___ time.",
+    "options": ["in", "on", "at", "by"],
+    "answer": 1,
+    "explanation": "'On time' means punctual.",
+    "hint": "train time par pahunchi"
+  },
+  {
+    "q": "She prefers tea ___ coffee.",
+    "options": ["than", "to", "from", "with"],
+    "answer": 1,
+    "explanation": "'Prefer A to B' is correct.",
+    "hint": "woh coffee ke mukable chai pasand karti hai"
+  },
+  {
+    "q": "I was surprised ___ his behavior.",
+    "options": ["to", "for", "at", "with"],
+    "answer": 2,
+    "explanation": "'Surprised at' is correct.",
+    "hint": "mujhe uske behavior par hairani hui"
+  },
+  {
+    "q": "He has been living here ___ five years.",
+    "options": ["since", "for", "from", "by"],
+    "answer": 1,
+    "explanation": "'For' is used with duration.",
+    "hint": "woh yahan paanch saalon se reh raha hai"
+  },
+  {
+    "q": "Don’t forget to lock the door ___ you leave.",
+    "options": ["after", "before", "when", "while"],
+    "answer": 1,
+    "explanation": "'Before' shows correct sequence.",
+    "hint": "jaane se pehle darwaza band karna mat bhoolna"
+  },
+  {
+    "q": "She ___ playing the piano when I arrived.",
+    "options": ["is", "was", "has", "had"],
+    "answer": 1,
+    "explanation": "Past continuous is used for an action in progress in the past.",
+    "hint": "jab main pahuncha, woh piano baja rahi thi"
+  },
+  {
+    "q": "They ___ already finished the work.",
+    "options": ["has", "have", "had", "having"],
+    "answer": 1,
+    "explanation": "Present perfect with plural subject uses 'have'.",
+    "hint": "unhone kaam pehle hi khatam kar liya hai"
+  },
+  {
+    "q": "If it ___ tomorrow, we will stay at home.",
+    "options": ["rain", "rains", "rained", "raining"],
+    "answer": 1,
+    "explanation": "First conditional uses present simple in if-clause.",
+    "hint": "agar kal baarish hoti hai to hum ghar par rahenge"
+  },
+  {
+    "q": "Identify the verb in the sentence: 'She reads a book every night.'",
+    "options": ["She", "reads", "book", "night"],
+    "answer": 1,
+    "explanation": "'Reads' is the action word (verb).",
+    "hint": "is sentence me kaam batane wala shabd 'reads' hai"
+  },
+  {
+    "q": "Identify the tense: 'He is playing cricket.'",
+    "options": ["Present Simple", "Present Continuous", "Past Simple", "Future Simple"],
+    "answer": 1,
+    "explanation": "'Is + verb-ing' shows Present Continuous tense.",
+    "hint": "woh abhi cricket khel raha hai"
+  },
+  {
+    "q": "Identify the verb in the sentence: 'They have completed the task.'",
+    "options": ["They", "have", "completed", "task"],
+    "answer": 2,
+    "explanation": "'Completed' is the main verb.",
+    "hint": "unhone kaam poora kar liya hai"
+  },
+  {
+    "q": "Identify the tense: 'I am waiting for the bus.'",
+    "options": ["Past Simple", "Future Continuous", "Present Continuous", "Present Perfect"],
+    "answer": 2,
+    "explanation": "'Am + verb-ing' shows Present Continuous tense.",
+    "hint": "main bus ka intezar kar raha hoon"
+  },
+  {
+    "q": "Identify the main verb: 'She usually cooks dinner at home.'",
+    "options": ["usually", "cooks", "dinner", "home"],
+    "answer": 1,
+    "explanation": "'Cooks' is the action verb.",
+    "hint": "woh aksar ghar par khana banati hai"
+  },
+  {
+    "q": "Identify the helping verb: 'They have finished their work.'",
+    "options": ["finished", "they", "have", "work"],
+    "answer": 2,
+    "explanation": "'Have' is the helping (auxiliary) verb.",
+    "hint": "unhone apna kaam khatam kar liya hai"
+  },
+  {
+    "q": "Identify the tense: 'He goes to the gym every day.'",
+    "options": ["Present Simple", "Present Continuous", "Past Simple", "Future Simple"],
+    "answer": 0,
+    "explanation": "Habitual actions use Present Simple.",
+    "hint": "woh roz gym jaata hai"
+  },
+  {
+    "q": "Identify the verb in the sentence: 'Please close the door.'",
+    "options": ["please", "close", "the", "door"],
+    "answer": 1,
+    "explanation": "'Close' is the verb.",
+    "hint": "kripya darwaza band kar do"
+  },
+  {
+    "q": "Identify the tense: 'We were watching TV when it started raining.'",
+    "options": ["Past Simple", "Past Continuous", "Present Perfect", "Future Simple"],
+    "answer": 1,
+    "explanation": "'Were + verb-ing' shows Past Continuous.",
+    "hint": "jab baarish shuru hui, hum TV dekh rahe the"
+  },
+  {
+    "q": "Identify the modal verb: 'You should drink more water.'",
+    "options": ["drink", "more", "should", "water"],
+    "answer": 2,
+    "explanation": "'Should' is a modal verb.",
+    "hint": "tumhe zyada paani peena chahiye"
+  },
+  {
+    "q": "Identify the tense: 'I will call you later.'",
+    "options": ["Present Simple", "Future Simple", "Present Continuous", "Past Simple"],
+    "answer": 1,
+    "explanation": "'Will + base verb' shows Future Simple.",
+    "hint": "main baad me tumhe call karunga"
+  },
+  {
+    "q": "Identify the verb in the sentence: 'He forgot his wallet at home.'",
+    "options": ["wallet", "forgot", "home", "his"],
+    "answer": 1,
+    "explanation": "'Forgot' is the verb.",
+    "hint": "woh apna wallet ghar par bhool gaya"
+  },
+  {
+    "q": "Identify the tense: 'She has been working all day.'",
+    "options": ["Present Perfect", "Present Perfect Continuous", "Past Continuous", "Future Continuous"],
+    "answer": 1,
+    "explanation": "'Has been + verb-ing' shows Present Perfect Continuous.",
+    "hint": "woh poora din kaam karti aa rahi hai"
+  },
+  {
+    "q": "Identify the helping verb: 'I am feeling tired.'",
+    "options": ["feeling", "tired", "am", "I"],
+    "answer": 2,
+    "explanation": "'Am' helps form the tense.",
+    "hint": "main thaka hua mehsoos kar raha hoon"
+  },
+  {
+    "q": "Identify the tense: 'They cleaned the room yesterday.'",
+    "options": ["Present Perfect", "Past Simple", "Present Simple", "Future Simple"],
+    "answer": 1,
+    "explanation": "Past time word 'yesterday' indicates Past Simple.",
+    "hint": "unhone kal kamra saaf kiya"
+  },
+  {
+    "q": "Identify the tense: 'She had left before I arrived.'",
+    "options": ["Past Simple", "Past Continuous", "Past Perfect", "Present Perfect"],
+    "answer": 2,
+    "explanation": "'Had + V3' shows Past Perfect tense.",
+    "hint": "mere aane se pehle woh ja chuki thi"
+  },
+  {
+    "q": "Identify the helping verb: 'I am learning English.'",
+    "options": ["I", "am", "learning", "English"],
+    "answer": 1,
+    "explanation": "'Am' is the helping (auxiliary) verb.",
+    "hint": "is sentence me helping verb 'am' hai"
+  },
+  {
+    "q": "Identify the tense: 'We will start the work tomorrow.'",
+    "options": ["Present Simple", "Past Simple", "Future Simple", "Future Continuous"],
+    "answer": 2,
+    "explanation": "'Will + base verb' shows Future Simple.",
+    "hint": "hum kal kaam shuru karenge"
+  },
+  {
+    "q": "Identify the main verb in the sentence: 'She has been waiting for an hour.'",
+    "options": ["has", "been", "waiting", "for"],
+    "answer": 2,
+    "explanation": "'Waiting' is the main action verb.",
+    "hint": "woh ek ghante se intezar kar rahi hai"
+  },
+  {
+    "q": "Identify the tense: 'They are watching a movie.'",
+    "options": ["Present Simple", "Present Continuous", "Past Continuous", "Future Continuous"],
+    "answer": 1,
+    "explanation": "'Are + verb-ing' shows Present Continuous.",
+    "hint": "woh movie dekh rahe hain"
+  },
+  {
+    "q": "Identify the verb in the sentence: 'He wrote a letter yesterday.'",
+    "options": ["He", "wrote", "letter", "yesterday"],
+    "answer": 1,
+    "explanation": "'Wrote' is the verb (past form of write).",
+    "hint": "usne kal ek letter likha"
+  },
+  {
+    "q": "Identify the tense: 'I have known him for years.'",
+    "options": ["Present Simple", "Past Simple", "Present Perfect", "Past Perfect"],
+    "answer": 2,
+    "explanation": "'Have + V3' shows Present Perfect tense.",
+    "hint": "main use kai saalon se jaanta hoon"
+  },
+  {
+    "q": "Identify the modal verb in the sentence: 'You should respect elders.'",
+    "options": ["You", "should", "respect", "elders"],
+    "answer": 1,
+    "explanation": "'Should' is a modal verb.",
+    "hint": "is sentence me modal verb 'should' hai"
+  },
+  {
+    "q": "Identify the tense: 'She was cooking when I called.'",
+    "options": ["Past Simple", "Past Continuous", "Present Continuous", "Past Perfect"],
+    "answer": 1,
+    "explanation": "'Was + verb-ing' shows Past Continuous.",
+    "hint": "jab maine call ki, woh khana bana rahi thi"
+  },
+  {
+    "q": "He ___ to the gym every morning.",
+    "options": ["go", "goes", "going", "gone"],
+    "answer": 1,
+    "explanation": "Third person singular takes 's/es'.",
+    "hint": "woh har subah gym jaata hai"
+  },
+  {
+    "q": "She was tired, ___ she decided to rest.",
+    "options": ["but", "because", "so", "although"],
+    "answer": 2,
+    "explanation": "'So' shows result.",
+    "hint": "woh thak gayi thi, isliye usne aaram karne ka faisla kiya"
+  },
+  {
+    "q": "I didn’t know ___ he was coming.",
+    "options": ["what", "that", "which", "who"],
+    "answer": 1,
+    "explanation": "'That' is used to introduce a clause.",
+    "hint": "mujhe pata nahi tha ki woh aa raha hai"
+  },
+  {
+    "q": "She has been waiting here ___ two hours.",
+    "options": ["since", "for", "from", "by"],
+    "answer": 1,
+    "explanation": "'For' is used with duration.",
+    "hint": "woh yahan do ghante se intezar kar rahi hai"
+  },
+  {
+    "q": "Identify the tense: 'I am brushing my teeth.'",
+    "options": ["Present Perfect", "Past Continuous", "Present Continuous", "Future Simple"],
+    "answer": 2,
+    "explanation": "'Am + verb-ing' shows Present Continuous.",
+    "hint": "main apne daant saaf kar raha hoon"
+  },
+  {
+    "q": "Identify the verb: 'She opened the window.'",
+    "options": ["she", "opened", "window", "the"],
+    "answer": 1,
+    "explanation": "'Opened' shows the action.",
+    "hint": "usne khidki kholi"
+  },
+  {
+    "q": "Identify the tense: 'We eat dinner at 9 p.m.'",
+    "options": ["Past Simple", "Present Simple", "Present Continuous", "Future Simple"],
+    "answer": 1,
+    "explanation": "Daily routine uses Present Simple.",
+    "hint": "hum raat ko 9 baje khana khate hain"
+  },
+  {
+    "q": "Identify the helping verb: 'They are getting ready.'",
+    "options": ["getting", "ready", "are", "they"],
+    "answer": 2,
+    "explanation": "'Are' is the auxiliary verb.",
+    "hint": "woh tayyar ho rahe hain"
+  },
+  {
+    "q": "Identify the tense: 'He was driving fast.'",
+    "options": ["Past Simple", "Past Continuous", "Present Continuous", "Present Perfect"],
+    "answer": 1,
+    "explanation": "'Was + verb-ing' shows Past Continuous.",
+    "hint": "woh tez gaadi chala raha tha"
+  },
+  {
+    "q": "Identify the modal verb: 'You must wear a helmet.'",
+    "options": ["wear", "must", "helmet", "you"],
+    "answer": 1,
+    "explanation": "'Must' shows obligation.",
+    "hint": "tumhe helmet pehna zaroori hai"
+  },
+  {
+    "q": "Identify the tense: 'She has cooked lunch.'",
+    "options": ["Past Simple", "Present Perfect", "Present Continuous", "Past Perfect"],
+    "answer": 1,
+    "explanation": "'Has + V3' shows Present Perfect.",
+    "hint": "usne lunch bana liya hai"
+  },
+  {
+    "q": "Identify the verb: 'Please sit here.'",
+    "options": ["please", "sit", "here", "none"],
+    "answer": 1,
+    "explanation": "'Sit' is the action word.",
+    "hint": "kripya yahan baithiye"
+  },
+  {
+    "q": "Identify the tense: 'They will leave soon.'",
+    "options": ["Present Simple", "Future Simple", "Present Continuous", "Past Simple"],
+    "answer": 1,
+    "explanation": "'Will + base verb' shows Future Simple.",
+    "hint": "woh jaldi nikal jaayenge"
+  },
+  {
+    "q": "Identify the main verb: 'He has been working late.'",
+    "options": ["has", "been", "working", "late"],
+    "answer": 2,
+    "explanation": "'Working' is the main verb.",
+    "hint": "woh der tak kaam kar raha hai"
+  },
+
+  {
+    "q": "Identify the tense: 'I forgot my phone at home.'",
+    "options": ["Present Perfect", "Past Simple", "Future Simple", "Present Simple"],
+    "answer": 1,
+    "explanation": "Past action uses Past Simple.",
+    "hint": "main apna phone ghar par bhool gaya"
+  },
+  {
+    "q": "Identify the verb: 'She listens to music daily.'",
+    "options": ["she", "listens", "music", "daily"],
+    "answer": 1,
+    "explanation": "'Listens' is the verb.",
+    "hint": "woh roz music sunti hai"
+  },
+  {
+    "q": "Identify the tense: 'We are ordering food online.'",
+    "options": ["Past Continuous", "Present Continuous", "Future Simple", "Present Simple"],
+    "answer": 1,
+    "explanation": "Ongoing action → Present Continuous.",
+    "hint": "hum online khana order kar rahe hain"
+  },
+  {
+    "q": "Identify the helping verb: 'I have lost my keys.'",
+    "options": ["lost", "keys", "have", "my"],
+    "answer": 2,
+    "explanation": "'Have' is the auxiliary verb.",
+    "hint": "meri chabiyan kho gayi hain"
+  },
+  {
+    "q": "Identify the tense: 'She was cleaning the room.'",
+    "options": ["Present Continuous", "Past Continuous", "Past Simple", "Present Perfect"],
+    "answer": 1,
+    "explanation": "'Was + verb-ing' shows Past Continuous.",
+    "hint": "woh kamra saaf kar rahi thi"
+  },
+  {
+    "q": "Identify the modal verb: 'You can sit here.'",
+    "options": ["sit", "can", "here", "you"],
+    "answer": 1,
+    "explanation": "'Can' shows permission.",
+    "hint": "tum yahan baith sakte ho"
+  },
+  {
+    "q": "Identify the tense: 'He has been waiting outside.'",
+    "options": ["Present Perfect", "Present Perfect Continuous", "Past Continuous", "Future Continuous"],
+    "answer": 1,
+    "explanation": "'Has been + verb-ing' shows Present Perfect Continuous.",
+    "hint": "woh bahar intezar kar raha hai"
+  },
+  {
+    "q": "Identify the verb: 'Turn off the fan.'",
+    "options": ["turn", "off", "fan", "the"],
+    "answer": 0,
+    "explanation": "'Turn' is the verb (imperative).",
+    "hint": "pankha band kar do"
+  },
+  {
+    "q": "Identify the tense: 'They go for a walk every evening.'",
+    "options": ["Present Simple", "Past Simple", "Future Simple", "Present Continuous"],
+    "answer": 0,
+    "explanation": "Habitual action uses Present Simple.",
+    "hint": "woh har shaam walk par jaate hain"
+  },
+  {
+    "q": "Identify the helping verb: 'She is feeling sleepy.'",
+    "options": ["sleepy", "feeling", "is", "she"],
+    "answer": 2,
+    "explanation": "'Is' helps form the tense.",
+    "hint": "use neend aa rahi hai"
+  },
+
+  {
+    "q": "Identify the tense: 'We had finished dinner.'",
+    "options": ["Past Simple", "Past Perfect", "Present Perfect", "Future Perfect"],
+    "answer": 1,
+    "explanation": "'Had + V3' shows Past Perfect.",
+    "hint": "humne dinner khatam kar liya tha"
+  },
+  {
+    "q": "Identify the verb: 'He answered the call.'",
+    "options": ["answered", "call", "the", "he"],
+    "answer": 0,
+    "explanation": "'Answered' is the verb.",
+    "hint": "usne call ka jawab diya"
+  },
+  {
+    "q": "Identify the tense: 'I will message you later.'",
+    "options": ["Present Simple", "Future Simple", "Present Continuous", "Past Simple"],
+    "answer": 1,
+    "explanation": "'Will' indicates future.",
+    "hint": "main baad me tumhe message karunga"
+  },
+  {
+    "q": "Identify the modal verb: 'You should rest now.'",
+    "options": ["rest", "should", "now", "you"],
+    "answer": 1,
+    "explanation": "'Should' gives advice.",
+    "hint": "tumhe ab aaram karna chahiye"
+  },
+  {
+    "q": "Identify the tense: 'She is cooking dinner.'",
+    "options": ["Present Simple", "Present Continuous", "Past Continuous", "Present Perfect"],
+    "answer": 1,
+    "explanation": "Ongoing action → Present Continuous.",
+    "hint": "woh dinner bana rahi hai"
+  },
+  {
+    "q": "Neither Ram ___ his friends were present.",
+    "options": ["or", "nor", "and", "but"],
+    "answer": 1,
+    "explanation": "'Neither' is paired with 'nor'.",
+    "hint": "na Ram aur na hi uske dost maujood the"
+  },
+  {
+    "q": "The teacher asked the students ___ quiet.",
+    "options": ["be", "to be", "being", "been"],
+    "answer": 1,
+    "explanation": "'Asked to be' is correct infinitive form.",
+    "hint": "teacher ne students ko shant rehne ko kaha"
+  },
+  {
+    "q": "He speaks ___ than his brother.",
+    "options": ["clear", "clearly", "more clearly", "most clearly"],
+    "answer": 2,
+    "explanation": "Comparative adverb is used for comparison.",
+    "hint": "woh apne bhai se zyada saaf bolta hai"
+  },
+  {
+    "q": "She didn’t come ___ she was feeling unwell.",
+    "options": ["but", "so", "because", "although"],
+    "answer": 2,
+    "explanation": "'Because' gives reason.",
+    "hint": "woh nahi aayi kyunki uski tabiyat theek nahi thi"
+  },
+  {
+    "q": "The work ___ by him yesterday.",
+    "options": ["is done", "was done", "has done", "did"],
+    "answer": 1,
+    "explanation": "Passive voice in past simple uses 'was + past participle'.",
+    "hint": "kaam kal uske dwara kiya gaya"
+  },
+  {
+    "q": "I wish I ___ harder for the exam.",
+    "options": ["study", "studied", "had studied", "will study"],
+    "answer": 2,
+    "explanation": "Wish about past uses past perfect.",
+    "hint": "kaash maine exam ke liye aur zyada padhai ki hoti"
+  },
+  {
+    "q": "She is ___ honest person.",
+    "options": ["a", "an", "the", "no article"],
+    "answer": 1,
+    "explanation": "'An' is used before vowel sound.",
+    "hint": "woh ek imaandaar vyakti hai"
+  },
+  {
+    "q": "He can ___ speak English fluently.",
+    "options": ["too", "also", "either", "neither"],
+    "answer": 1,
+    "explanation": "'Also' is used in affirmative sentences.",
+    "hint": "woh bhi English achhi tarah bol sakta hai"
+  },
+];
+// end QUESTIONS array
+
+const totalQ = QUESTIONS.length || 300;
+document.getElementById('totalQ').innerText = totalQ;
+document.getElementById('badgeCount').innerText = totalQ + " Qs";
+
+/* ============== App State ============== */
+let state = {
+  current: 0,
+  answers: Array(totalQ).fill(null), // user's selected index
+  answeredCorrect: Array(totalQ).fill(false),
+  started: false,
+  startTime: null,
+  elapsedSec: 0,
+  timerInterval: null,
+  idleTimer: null
+};
+
+/* ============== DOM refs ============== */
+const startPage = document.getElementById('startPage');
+const testPage = document.getElementById('testPage');
+const inpName = document.getElementById('inpName');
+const inpReg = document.getElementById('inpReg');
+const inpPic = document.getElementById('inpPic');
+const imgPreview = document.getElementById('imgPreview');
+const btnStart = document.getElementById('btnStart');
+const btnResetStart = document.getElementById('btnResetStart');
+const startErrors = document.getElementById('startErrors');
+
+const showName = document.getElementById('showName');
+const showReg = document.getElementById('showReg');
+const userPicSmall = document.getElementById('userPicSmall');
+const showUser = document.getElementById('showUser');
+
+const timeTop = document.getElementById('timeTop');
+const topCorrect = document.getElementById('topCorrect');
+const topWrong = document.getElementById('topWrong');
+const topProgress = document.getElementById('topProgress');
+const topAttempted = document.getElementById('topAttempted');
+const topQno = document.getElementById('topQno');
+
+const questionText = document.getElementById('questionText');
+const optionsBox = document.getElementById('optionsBox');
+const explainBox = document.getElementById('explainBox');
+const btnPrev = document.getElementById('btnPrev');
+const btnNext = document.getElementById('btnNext');
+const btnShowExplain = document.getElementById('btnShowExplain');
+const btnEndTestTop = document.getElementById('btnEndTestTop');
+
+const curQ = document.getElementById('curQ');
+const correctCountEl = document.getElementById('correctCount');
+const wrongCountEl = document.getElementById('wrongCount');
+const attemptedCountEl = document.getElementById('attemptedCount');
+const timeSpentEl = document.getElementById('timeSpent');
+const scoreInline = document.getElementById('scoreInline');
+const progressPercent = document.getElementById('progressPercent');
+
+const btnSave = document.getElementById('btnSave');
+const btnExport = document.getElementById('btnExport');
+
+const modalRoot = document.getElementById('modalRoot');
+
+/* ============== Helpers ============== */
+function formatTime(sec){
+  const m = Math.floor(sec/60).toString().padStart(2,'0');
+  const s = (sec%60).toString().padStart(2,'0');
+  return `${m}:${s}`;
+}
+function updateTopStatus(){
+  const attempted = state.answers.filter(a=>a!==null).length;
+  const correct = state.answeredCorrect.filter(x=>x).length;
+  const wrong = attempted - correct;
+  topCorrect.innerText = correct;
+  topWrong.innerText = wrong;
+  topAttempted.innerText = attempted;
+  topProgress.innerText = `${Math.round((correct/totalQ)*100)}%`;
+  topQno.innerText = `${state.current+1}/${totalQ}`;
+  // right side small summary
+  correctCountEl.innerText = correct;
+  wrongCountEl.innerText = wrong;
+  attemptedCountEl.innerText = attempted;
+  scoreInline.innerText = correct;
+  curQ.innerText = state.current + 1;
+  progressPercent.innerText = `${Math.round((correct/totalQ)*100)}%`;
+}
+function startTimer(){
+  if(state.timerInterval) return;
+  state.startTime = Date.now() - (state.elapsedSec*1000);
+  state.timerInterval = setInterval(()=>{
+    state.elapsedSec = Math.floor((Date.now()-state.startTime)/1000);
+    timeTop.innerText = formatTime(state.elapsedSec);
+    timeSpentEl.innerText = formatTime(state.elapsedSec);
+  },1000);
+}
+function stopTimer(){
+  if(state.timerInterval){ clearInterval(state.timerInterval); state.timerInterval = null; }
+}
+function resetIdleTimer(){
+  if(state.idleTimer) clearTimeout(state.idleTimer);
+  // show warning if no action for 60s
+  state.idleTimer = setTimeout(()=>{ showWarning("You're idle — please continue answering to use time well."); }, 60000);
+}
+function showWarning(text){
+  // small non-blocking toast modal that disappears
+  const toast = document.createElement('div');
+  toast.style.position='fixed'; toast.style.left='50%'; toast.style.transform='translateX(-50%)'; toast.style.bottom='22px';
+  toast.style.background='rgba(0,0,1,0.8)'; toast.style.padding='12px 16px'; toast.style.borderRadius='10px'; toast.style.color='#fef'; toast.style.zIndex=9999;
+  toast.innerText = "⚠️ " + text;
+  document.body.appendChild(toast);
+  setTimeout(()=>{ toast.style.transition='opacity .4s'; toast.style.opacity='0'; setTimeout(()=>toast.remove(),400); }, 3000);
+}
+
+/* ============== Validation (start page) ============== */
+function validateName(v){
+  if(!v || !v.trim()) return false;
+  // allow letters, spaces, dot and hyphen optional; disallow digits
+  return /^[A-Za-z\s\.\-']+$/.test(v.trim());
+}
+function validateReg(v){
+  return /^\d{8}$/.test(v);
+}
+function checkStartInputs(){
+  const name = inpName.value.trim();
+  const reg = inpReg.value.trim();
+  let ok = true; startErrors.innerText = '';
+  if(!validateName(name)){ ok = false; startErrors.innerText = 'Name invalid: only letters, spaces allowed.'; }
+  else if(!validateReg(reg)){ ok = false; startErrors.innerText = 'Registration invalid: must be exactly 8 digits.'; }
+  btnStart.disabled = !ok;
+}
+
+/* image preview */
+inpPic.addEventListener('change', (e)=>{
+  const f = e.target.files && e.target.files[0];
+  if(!f){ imgPreview.style.display='none'; userPicSmall.style.display='none'; return; }
+  const url = URL.createObjectURL(f);
+  imgPreview.src = url; imgPreview.style.display='block';
+  userPicSmall.src = url; userPicSmall.style.display='block';
+});
+
+/* listen to inputs */
+inpName.addEventListener('input', checkStartInputs);
+inpReg.addEventListener('input', checkStartInputs);
+
+/* ============== Rendering ============== */
+function renderQuestion(idx){
+  resetIdleTimer();
+  const item = QUESTIONS[idx];
+  if(!item){
+    questionText.innerText = 'Question bank not loaded. Paste the QUESTIONS array into the file.';
+    optionsBox.innerHTML = '';
+    return;
+  }
+  questionText.innerHTML = `<span style="opacity:.9">${idx+1}.</span> <span style="margin-left:8px">${item.q}</span>`;
+  showName.innerText = inpName.value || '—';
+  showReg.innerText = inpReg.value || '—';
+  showUser.innerText = `${inpName.value || ''} • ${inpReg.value || ''}`;
+  explainBox.style.display = 'none'; explainBox.innerHTML = '';
+  optionsBox.innerHTML = '';
+
+  item.options.forEach((optText, i)=>{
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.dataset.index = i;
+    div.innerHTML = `<div class="label"><strong>${String.fromCharCode(65+i)}</strong>. ${optText}</div><div class="explainTiny">Explain</div>`;
+    // answer click
+    div.addEventListener('click', (e)=>{
+      if(state.answers[idx] !== null) return; // locked
+      handleAnswer(idx, i);
+    });
+    // explain click
+    div.querySelector('.explainTiny').addEventListener('click', (ev)=>{ ev.stopPropagation(); showExplanation(idx); });
+    optionsBox.appendChild(div);
+  });
+
+  // if answered already, show colors
+  if(state.answers[idx] !== null){
+    const chosen = state.answers[idx];
+    const correct = QUESTIONS[idx].answer;
+    const all = optionsBox.querySelectorAll('.option');
+    all.forEach((od, i)=>{
+      od.classList.remove('correct','wrong');
+      if(i === correct) od.classList.add('correct');
+      if(i === chosen && chosen !== correct) od.classList.add('wrong');
+    });
+    explainBox.innerHTML = `<strong>Explanation:</strong><br>${item.explanation}<br><br><strong>Correct:</strong> ${String.fromCharCode(65+item.answer)}. ${item.options[item.answer]}`;
+    explainBox.style.display = 'none';
+  }
+
+  updateTopStatus();
+}
+
+/* ============== Answer Logic ============== */
+function handleAnswer(qIdx, choiceIdx){
+  // lock once selected
+  if(state.answers[qIdx] !== null) return;
+  state.answers[qIdx] = choiceIdx;
+  const correct = QUESTIONS[qIdx].answer;
+  const wasCorrect = (choiceIdx === correct);
+  state.answeredCorrect[qIdx] = wasCorrect;
+
+  // color options
+  const optDivs = optionsBox.querySelectorAll('.option');
+  optDivs.forEach((od, i)=>{
+    od.classList.remove('correct','wrong');
+    if(i === correct) od.classList.add('correct');
+    if(i === choiceIdx && choiceIdx !== correct) od.classList.add('wrong');
+  });
+
+  updateTopStatus();
+
+  // brief animation & then auto-next after 700ms
+  if(wasCorrect){
+    const correctEl = optionsBox.querySelector('.option.correct');
+    if(correctEl) correctEl.animate([{transform:'scale(1)'},{transform:'scale(1.03)'},{transform:'scale(1)'}], {duration:450, iterations:1, easing:'ease-out'});
+  }
+
+  // small delay then go next (unless last)
+  setTimeout(()=>{
+    if(state.current < totalQ - 1){
+      state.current++;
+      renderQuestion(state.current);
+    } else {
+      // reached end - show modal summary
+      showSummaryModal();
+    }
+  }, 2000);
+}
+
+/* explanation */
+function showExplanation(idx){
+  const item = QUESTIONS[idx];
+  if(!item) return;
+  explainBox.style.display = 'block';
+  explainBox.innerHTML = `<strong>Explanation:</strong><br>${item.explanation}<br><br><strong>Correct:</strong> ${String.fromCharCode(65+item.answer)}. ${item.options[item.answer]}`;
+}
+
+/* ============== Controls ============== */
+btnStart.addEventListener('click', ()=>{
+  // validate again
+  const name = inpName.value.trim();
+  const reg = inpReg.value.trim();
+  if(!validateName(name) || !validateReg(reg)){ alert('Enter valid Name and 8-digit Registration number.'); return; }
+  if(!QUESTIONS || QUESTIONS.length === 0){ alert('Question bank empty. Paste QUESTIONS into the file.'); return; }
+
+  // save user to localStorage (temp)
+  const user = {name, reg, pic: null};
+  if(inpPic.files && inpPic.files[0]){
+    // read as data URL
+    const reader = new FileReader();
+    reader.onload = function(e){
+      user.pic = e.target.result;
+      startTest(user);
+    }
+    reader.readAsDataURL(inpPic.files[0]);
+  } else {
+    startTest(user);
+  }
+});
+function startTest(user){
+  // store last user
+  localStorage.setItem('ECE-249_user', JSON.stringify(user));
+  // show test page
+  startPage.style.display = 'none';
+  testPage.style.display = 'block';
+  if(user.pic){ userPicSmall.src = user.pic; userPicSmall.style.display='block'; }
+  showName.innerText = user.name; showReg.innerText = user.reg; showUser.innerText = `${user.name} • ${user.reg}`;
+  state.started = true; startTimer(); resetIdleTimer(); renderQuestion(state.current); updateTopStatus();
+}
+
+/* Prev/Next */
+btnPrev.addEventListener('click', ()=>{ if(state.current>0){ state.current--; renderQuestion(state.current); } resetIdleTimer();});
+btnNext.addEventListener('click', ()=>{ if(state.current < totalQ - 1){ state.current++; renderQuestion(state.current); } resetIdleTimer();});
+
+/* End Test */
+btnEndTestTop.addEventListener('click', ()=>{ if(!state.started){ alert('Test not started.'); return;} if(!confirm('End test now and save result?')) return; stopTimer(); saveResult(); showSummaryModal(); });
+
+/* Show explain */
+btnShowExplain.addEventListener('click', ()=>{ showExplanation(state.current); });
+
+/* Keyboard navigation */
+document.addEventListener('keydown', (e)=>{ if(e.key === 'ArrowRight') btnNext.click(); if(e.key === 'ArrowLeft') btnPrev.click(); });
+
+/* Reset start page */
+btnResetStart.addEventListener('click', ()=>{ if(confirm('Reset start form?')){ inpName.value=''; inpReg.value=''; inpPic.value=''; imgPreview.style.display='none'; checkStartInputs(); } });
+
+/* Save result to localStorage */
+function saveResult(){
+  const correct = state.answeredCorrect.filter(x=>x).length;
+  const attempted = state.answers.filter(a=>a!==null).length;
+  const user = JSON.parse(localStorage.getItem('ECE-249_user') || '{}');
+  const result = { name: user.name || inpName.value, reg: user.reg || inpReg.value, pic: user.pic || null, correct, attempted, time: formatTime(state.elapsedSec), date: (new Date()).toLocaleString() };
+  
+  // 🔗 also save online
+  saveResultToSupabase(result); 
+
+  // const key = 'ECE-249_results';
+  // const arr = JSON.parse(localStorage.getItem(key) || '[]');
+  // arr.push(result);
+  // localStorage.setItem(key, JSON.stringify(arr));
+  // alert('Result saved locally.');
+}
+
+// 🌀 Small loader toast (for showing saving progress)
+
+function showLoader(msg, duration = 1500) {
+  const toast = document.createElement('div');
+  toast.style.position = 'fixed';
+  toast.style.left = '50%';
+  toast.style.transform = 'translateX(-50%)';
+  toast.style.bottom = '30px';
+  toast.style.background = 'rgba(0,0,0,0.8)';
+  toast.style.color = '#fff';
+  toast.style.padding = '12px 18px';
+  toast.style.borderRadius = '10px';
+  toast.style.fontSize = '14px';
+  toast.style.zIndex = 9999;
+  toast.innerText = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.style.transition = 'opacity .4s';
+    toast.style.opacity = '0';
+    setTimeout(() => toast.remove(), 400);
+  }, duration);
+}
+
+
+// // 🟢 Supabase Database Save (adds result to test_result table)
+// async function saveResultToSupabase(result) {
+//   try {
+//     // पहले check करो कि यह registration पहले से मौजूद तो नहीं है
+//     const { data: existing, error: fetchError } = await supabase
+//       .from('test_result')
+//       .select('reg')
+//       .eq('reg', result.reg);
+
+//     if (fetchError) throw fetchError;
+
+//     if (existing && existing.length > 0) {
+//       alert('⚠️ This registration number has already submitted a result!');
+//       return;
+//     }
+
+//     // Insert new result
+//     const { data, error } = await supabase
+//       .from('test_result')
+//       .insert([result]);
+
+//     if (error) throw error;
+
+//     alert('✅ Result saved to Supabase database!');
+//   } catch (err) {
+//     console.error('Supabase insert error:', err);
+//     alert('❌ Error saving result to Supabase.');
+//   }
+// }
+/* Export CSV for all saved results */
+
+// 🟢 Supabase Database Save (adds result to test_result table)
+async function saveResultToSupabase(result) {
+  try {
+    showLoader("⏳ 😄😄Checking registration...");
+
+    // पहले check करो कि यह registration पहले से मौजूद तो नहीं है
+    const { data: existing, error: fetchError } = await supabase
+      .from('test_result')
+      .select('reg')
+      .eq('reg', result.reg);
+
+    if (fetchError) throw fetchError;
+
+    if (existing && existing.length > 0) {
+      showLoader("⚠️ Already submitted!", 2000);
+      alert('⚠️ This registration number has already submitted a result!');
+      return;
+    }
+
+    showLoader("💾 Saving your result...");
+
+    // Insert new result
+    const { data, error } = await supabase
+      .from('test_result')
+      .insert([result]);
+
+    if (error) throw error;
+
+    showLoader("✅ 😃Saved successfully!", 1800);
+    alert('✅  😃Result saved to Aryan_data_base!');
+
+  } catch (err) {
+    console.error('Aryan_data_base insert error:', err);
+    showLoader("❌🥲🥲 Error saving result!", 2000);
+    alert('❌🥲🥲 Error saving result to Aryan_data_base.');
+  }
+}
+
+// 🟢 Fetch all saved results from Supabase (Leaderboard)
+async function fetchAllResults() {
+  try {
+    showLoader("📡 Fetching results...");
+
+    const { data, error } = await supabase
+      .from('test_result')
+      .select('name, reg, correct, attempted, time, date')
+      .order('correct', { ascending: false }); // Highest score first
+
+    if (error) throw error;
+
+    showResultsTable(data); // show inside modal
+  } catch (err) {
+    console.error("Aryan_database fetch error:", err);
+    alert("❌ Error fetching results from Aryan_database!");
+  }
+}
+
+btnExport.addEventListener('click', ()=>{
+  const arr = JSON.parse(localStorage.getItem('ECE-249_results') || '[]');
+  if(arr.length === 0){ alert('No saved results to export.'); return; }
+  const headers = ['Name','Reg','Correct','Attempted','Time','Date'];
+  const rows = arr.map(r => [r.name, r.reg, r.correct, r.attempted, r.time, r.date]);
+  let csv = headers.join(',') + '\n' + rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type: 'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'ECE-249_results.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+});
+
+/* View summary modal */
+function showSummaryModal(){
+  const correct = state.answeredCorrect.filter(x=>x).length;
+  const attempted = state.answers.filter(a=>a!==null).length;
+  modalRoot.innerHTML = '';
+  const backdrop = document.createElement('div'); backdrop.className = 'modal-backdrop';
+  const modal = document.createElement('div'); modal.className = 'modal';
+  const user = JSON.parse(localStorage.getItem('ECE-249_user') || '{}');
+  modal.innerHTML = `<h3>Test Summary</h3>
+    <p><strong>Name:</strong> ${user.name || inpName.value} &nbsp; • &nbsp; <strong>Reg:</strong> ${user.reg || inpReg.value}</p>
+    <p><strong>Score:</strong> ${correct} / ${totalQ} &nbsp; • &nbsp; <strong>Attempted:</strong> ${attempted}</p>
+    <p><strong>Time:</strong> ${formatTime(state.elapsedSec)}</p>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+      <button id="modalSave" class="btn">Save</button>
+      <button id="modalReview" class="btn ghost">Review Answers</button>
+      <button id="modalClose" class="btn ghost">Close</button>
+    </div>`;
+  backdrop.appendChild(modal); modalRoot.appendChild(backdrop); modalRoot.style.display = 'block';
+  document.getElementById('modalClose').addEventListener('click', ()=>{ modalRoot.innerHTML=''; modalRoot.style.display='none'; });
+  document.getElementById('modalSave').addEventListener('click', ()=>{ saveResult(); modalRoot.innerHTML=''; modalRoot.style.display='none'; });
+  document.getElementById('modalReview').addEventListener('click', ()=>{ modalRoot.innerHTML=''; modalRoot.style.display='none'; reviewAllAnswers(); });
+}
+
+/* Review answers (list with question and selected) */
+function reviewAllAnswers(){
+  modalRoot.innerHTML = ''; const backdrop = document.createElement('div'); backdrop.className='modal-backdrop';
+  const modal = document.createElement('div'); modal.className='modal';
+  modal.innerHTML = `<h3>Review Answers</h3><div style="max-height:60vh;overflow:auto"><table class="results-table"><thead><tr><th>#</th><th>Question</th><th>Your</th><th>Correct</th></tr></thead><tbody id="revBody"></tbody></table></div><div style="display:flex;justify-content:flex-end;margin-top:8px"><button id="closeRev" class="btn ghost">Close</button></div>`;
+  backdrop.appendChild(modal); modalRoot.appendChild(backdrop); modalRoot.style.display='block';
+  const body = modal.querySelector('#revBody');
+  QUESTIONS.forEach((q,i)=>{
+    const your = state.answers[i] === null ? '-' : String.fromCharCode(65 + state.answers[i]) + '. ' + q.options[state.answers[i]];
+    const corr = String.fromCharCode(65 + q.answer) + '. ' + q.options[q.answer];
+    const tr = document.createElement('tr'); tr.innerHTML = `<td>${i+1}</td><td style="max-width:380px">${q.q}</td><td>${your}</td><td>${corr}</td>`;
+    body.appendChild(tr);
+  });
+  document.getElementById('closeRev').addEventListener('click', ()=>{ modalRoot.innerHTML=''; modalRoot.style.display='none'; });
+}
+
+/* review finished. */
+
+/* idle reset on any interaction */
+['click','mousemove','keydown','touchstart'].forEach(ev => document.addEventListener(ev, resetIdleTimer));
+
+/* Before unload confirm if started */
+window.addEventListener('beforeunload', function(e){ if(state.started){ e.preventDefault(); e.returnValue = ''; } });
+
+/* init */
+(function init(){
+  // if previous user exists, prefill name/reg
+  const prevUser = JSON.parse(localStorage.getItem('ECE-249_user') || 'null');
+  if(prevUser){
+    if(prevUser.name) inpName.value = prevUser.name;
+    if(prevUser.reg) inpReg.value = prevUser.reg;
+    if(prevUser.pic){ imgPreview.src = prevUser.pic; imgPreview.style.display='block'; userPicSmall.src = prevUser.pic; userPicSmall.style.display='block'; }
+  }
+  checkStartInputs();
+  curQ.innerText = 0;
+  timeTop.innerText = '00:00';
+  timeSpentEl.innerText = '00:00';
+  topProgress.innerText = '0%';
+  topCorrect.innerText = '0';
+  topWrong.innerText = '0';
+  topAttempted.innerText = '0';
+  topQno.innerText = '0/' + totalQ;
+})();
+</script>
+</body>
+</html>
