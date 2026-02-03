@@ -350,8 +350,8 @@ input[type="text"], input[type="file"]{
       <header>
         <div class="title">
           <div style="display:flex;align-items:center;gap:10px">
-            <h1>ECE-249 — Test Series (Units 1-6)</h1>
-            <div class="accent-badge" id="badgeCount">300+ Qs</div>
+            <h1>PEL121 — practice</h1>
+            <div class="accent-badge" id="badgeCount">100+ Qs</div>
           </div>
           <div class="small-by">Created by <strong>Aryan Singh</strong></div>
         </div>
@@ -378,7 +378,7 @@ input[type="text"], input[type="file"]{
           </div>
           <div class="about">
             <strong>About this Test</strong>
-            <p>• 200+ MCQs covering Units 1-6. One question at a time.</p>
+            <p>• 100+ MCQs covered. One question at a time.</p>
             <p>• Name & Registration number are mandatory. Profile picture optional.</p>
             <p>• No hard time limit, but inactivity of 60s shows a warning.</p>
             <p>• Wrong answers do not increase progress percentage (progress = correct / total).</p>
@@ -2105,7 +2105,7 @@ btnStart.addEventListener('click', ()=>{
 });
 function startTest(user){
   // store last user
-  localStorage.setItem('ECE-249_user', JSON.stringify(user));
+  localStorage.setItem('PEL-121_user', JSON.stringify(user));
   // show test page
   startPage.style.display = 'none';
   testPage.style.display = 'block';
@@ -2134,13 +2134,13 @@ btnResetStart.addEventListener('click', ()=>{ if(confirm('Reset start form?')){ 
 function saveResult(){
   const correct = state.answeredCorrect.filter(x=>x).length;
   const attempted = state.answers.filter(a=>a!==null).length;
-  const user = JSON.parse(localStorage.getItem('ECE-249_user') || '{}');
+  const user = JSON.parse(localStorage.getItem('PEL-121_user') || '{}');
   const result = { name: user.name || inpName.value, reg: user.reg || inpReg.value, pic: user.pic || null, correct, attempted, time: formatTime(state.elapsedSec), date: (new Date()).toLocaleString() };
   
   // 🔗 also save online
   saveResultToSupabase(result); 
 
-  // const key = 'ECE-249_results';
+  // const key = 'PEL-121_results';
   // const arr = JSON.parse(localStorage.getItem(key) || '[]');
   // arr.push(result);
   // localStorage.setItem(key, JSON.stringify(arr));
@@ -2260,14 +2260,14 @@ async function fetchAllResults() {
 }
 
 btnExport.addEventListener('click', ()=>{
-  const arr = JSON.parse(localStorage.getItem('ECE-249_results') || '[]');
+  const arr = JSON.parse(localStorage.getItem('PEL-121_results') || '[]');
   if(arr.length === 0){ alert('No saved results to export.'); return; }
   const headers = ['Name','Reg','Correct','Attempted','Time','Date'];
   const rows = arr.map(r => [r.name, r.reg, r.correct, r.attempted, r.time, r.date]);
   let csv = headers.join(',') + '\n' + rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob = new Blob([csv], {type: 'text/csv'});
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'ECE-249_results.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  const a = document.createElement('a'); a.href = url; a.download = 'PEL-121_results.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 });
 
 /* View summary modal */
@@ -2320,7 +2320,7 @@ window.addEventListener('beforeunload', function(e){ if(state.started){ e.preven
 /* init */
 (function init(){
   // if previous user exists, prefill name/reg
-  const prevUser = JSON.parse(localStorage.getItem('ECE-249_user') || 'null');
+  const prevUser = JSON.parse(localStorage.getItem('PEL-121_user') || 'null');
   if(prevUser){
     if(prevUser.name) inpName.value = prevUser.name;
     if(prevUser.reg) inpReg.value = prevUser.reg;
